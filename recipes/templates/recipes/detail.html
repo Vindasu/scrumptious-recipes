@@ -1,4 +1,5 @@
 {% load static %}
+{% load markdownify %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +42,8 @@
       {{ rating_form.as_p }}
       <button class="button">Rate</button>
     </form>
-    <p>Tags: {% for tag in recipe.tags.all %}{{ tag.name }} {% endfor %}</p>
-    <p>{{ recipe.description }}</p>
+    <p>Tags: {% for tag in recipe.tags.all %}{{ tag.word }} {% endfor %}</p>
+    {{ recipe.description | markdownify }}
     <h2>Ingredients</h2>
     <table>
       <thead>

@@ -1,14 +1,9 @@
 from django.contrib import admin
 
-from recipes.models import Recipe
-from recipes.models import Step
-from recipes.models import Measure
-from recipes.models import FoodItem
+from recipes.models import Recipe, Measure, FoodItem, Ingredient, Step, Rating
+
 
 # Register your models here.
-# Create a class that inherits from admin.ModelAdmin
-
-
 class RecipeAdmin(admin.ModelAdmin):
     pass
 
@@ -21,12 +16,21 @@ class FoodItemAdmin(admin.ModelAdmin):
     pass
 
 
+class IngredientAdmin(admin.ModelAdmin):
+    pass
+
+
 class StepAdmin(admin.ModelAdmin):
     pass
 
 
-# register the class and model
+class RatingAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Step, StepAdmin)
 admin.site.register(Measure, MeasureAdmin)
 admin.site.register(FoodItem, FoodItemAdmin)
+admin.site.register(Ingredient, IngredientAdmin)
+admin.site.register(Step, StepAdmin)
+admin.site.register(Rating, RatingAdmin)
