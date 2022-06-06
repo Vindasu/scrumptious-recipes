@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,12 +27,13 @@
       </ul>
     </nav>
   </header>
-  <main class="recipe-form">
+  <main>
     <form method="post">
       {% csrf_token %}
+      <p>Are you sure you want to delete "{{ recipe }}"?</p>
       {{ form.as_p }}
       <div class="control">
-        <button class="button">Update</button>
+        <button class="button">Delete</button>
       </div>
     </form>
   </main>
