@@ -1,4 +1,7 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 try:
@@ -7,22 +10,6 @@ try:
 except Exception:
     RecipeForm = None
     Recipe = None
-
-
-def create_recipe(request):
-    if request.method == "POST" and RecipeForm:
-        form = RecipeForm(request.POST)
-        if form.is_valid():
-            recipe = form.save()
-            return redirect("recipe_detail", pk=recipe.pk)
-    elif RecipeForm:
-        form = RecipeForm()
-    else:
-        form = None
-    context = {
-        "form": form,
-    }
-    return render(request, "recipes/new.html", context)
 
 
 def change_recipe(request, pk):
@@ -43,13 +30,23 @@ def change_recipe(request, pk):
     return render(request, "recipes/edit.html", context)
 
 
-def show_recipe(request, pk):
-    context = {
-        "recipe": Recipe.objects.get(pk=pk) if Recipe else None,
-    }
-    return render(request, "recipes/detail.html", context)
-
-
 class RecipeListView(ListView):
     model = Recipe
     template_name = "recipes/list.html"
+
+
+class RecipeDetailView(DetailView):
+    model = Recipe
+    template_name = "recipes/detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["rating_form"] = RatingForm()
+        return context
+
+
+class RecipeCreateView(CreateView):
+    model = Recipe
+    template_name = "recipes/new.html"
+    fields = ["name", "author", "description", "image"]
+    success_url = reverse_lazy("recipes_list")
